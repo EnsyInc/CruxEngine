@@ -98,8 +98,8 @@ public class Vector3DTests
     }
 
     [Theory]
-    [MemberData(nameof(SubstractionTestCases))]
-    public void Substraction(Vector3D first, Vector3D second, Vector3D expected)
+    [MemberData(nameof(SubtractionTestCases))]
+    public void Subtraction(Vector3D first, Vector3D second, Vector3D expected)
     {
         var actual = first - second;
 
@@ -143,7 +143,7 @@ public class Vector3DTests
             (new Vector3D(float.MaxValue, float.MaxValue, float.MaxValue), new Vector3D(float.MinValue, float.MinValue, float.MinValue), new Vector3D(float.MaxValue + float.MinValue, float.MaxValue + float.MinValue, float.MaxValue + float.MinValue)),
         ];
 
-    public static IEnumerable<TheoryDataRow<Vector3D, Vector3D, Vector3D>> SubstractionTestCases
+    public static IEnumerable<TheoryDataRow<Vector3D, Vector3D, Vector3D>> SubtractionTestCases
         => [
             (new Vector3D(1, 2, 3), new Vector3D(4, 5, 6), new Vector3D(-3, -3, -3)),
             (new Vector3D(4, 5, 6), new Vector3D(1, 2, 3), new Vector3D(3, 3, 3)),

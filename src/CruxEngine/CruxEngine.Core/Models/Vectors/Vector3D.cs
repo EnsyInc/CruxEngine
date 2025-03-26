@@ -82,11 +82,11 @@ public sealed record Vector3D
         => new(first.X + second.X, first.Y + second.Y, first.Z + second.Z);
 
     /// <summary>
-    /// Substracts a vector from another one.
+    /// Subtracts a vector from another one.
     /// </summary>
-    /// <param name="first">The vector from which to substract.</param>
-    /// <param name="second">The vector to substract.</param>
-    /// <returns>A new instance of a <see cref="Vector3D"/> that represents the result of the substraction of the input vectors.</returns>
+    /// <param name="first">The vector from which to subtract.</param>
+    /// <param name="second">The vector to subtract.</param>
+    /// <returns>A new instance of a <see cref="Vector3D"/> that represents the result of the subtraction of the input vectors.</returns>
     public static Vector3D operator -(Vector3D first, Vector3D second)
         => new(first.X - second.X, first.Y - second.Y, first.Z - second.Z);
 
