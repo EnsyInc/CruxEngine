@@ -32,7 +32,7 @@ public sealed record Matrix3D
     /// <summary>
     /// Creates a 3D Matrix from a 2 dimensional array.
     /// </summary>
-    /// <param name="matrix">The 2 dimansional array to be used to fill the matrix.</param>
+    /// <param name="matrix">The 2 dimensional array to be used to fill the matrix.</param>
     public Matrix3D(float[,] matrix)
     {
         if (matrix.GetLength(0) != 3 || matrix.GetLength(1) != 3)
