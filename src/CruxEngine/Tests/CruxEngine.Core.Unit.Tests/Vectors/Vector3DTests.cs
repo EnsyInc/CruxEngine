@@ -7,7 +7,7 @@ public class Vector3DTests
     private const float Tolerance = 1e-6f;
 
     [Fact]
-    public void Initialization_Default()
+    public void DefaultConstructor_FillsVector3DWith0()
     {
         var vector = new Vector3D();
 
@@ -23,7 +23,7 @@ public class Vector3DTests
     [InlineData(float.MinValue, float.MinValue, float.MinValue)]
     [InlineData(float.MaxValue, float.MaxValue, float.MaxValue)]
     [InlineData(float.MinValue, float.MaxValue, float.Epsilon)]
-    public void Initialization_Values(float x, float y, float z)
+    public void FloatConstructor_FillsVector3DWithValue(float x, float y, float z)
     {
         var vector = new Vector3D(x, y, z);
 
@@ -33,7 +33,7 @@ public class Vector3DTests
     }
 
     [Fact]
-    public void Zero_SameReference()
+    public void GetStaticZeroVector3D_ReturnsSameReference()
     {
         var vector1 = Vector3D.Zero;
         var vector2 = Vector3D.Zero;
@@ -43,7 +43,7 @@ public class Vector3DTests
 
     [Theory]
     [MemberData(nameof(NormalizeTestCases))]
-    public void Normalize(Vector3D vector, Vector3D expected)
+    public void Normalize_ReturnsExpectedValue(Vector3D vector, Vector3D expected)
     {
         var actual = vector.Normalize();
 
@@ -60,7 +60,7 @@ public class Vector3DTests
     [InlineData(1, 2, 2, 3)]
     [InlineData(-1, -1, -1, 1.73205078f)]
     [InlineData(1e-7f, 1e-7f, 1e-7f, 1.73205078e-7f)]
-    public void Magnitude(float x, float y, float z, float expectedMagnitude)
+    public void Magnitude_ReturnsExpectedValue(float x, float y, float z, float expectedMagnitude)
     {
         var vector = new Vector3D(x, y, z);
 
@@ -75,7 +75,7 @@ public class Vector3DTests
     [InlineData(0, 0, 0)]
     [InlineData(1.1f, -2.2f, 3.3f)]
     [InlineData(float.MaxValue, float.MinValue, float.Epsilon)]
-    public void Negate(float x, float y, float z)
+    public void Negate_ReturnsExpectedValue(float x, float y, float z)
     {
         var vector = new Vector3D(x, y, z);
 
@@ -88,7 +88,7 @@ public class Vector3DTests
 
     [Theory]
     [MemberData(nameof(AdditionTestCases))]
-    public void Addition(Vector3D first, Vector3D second, Vector3D expected)
+    public void Addition_ReturnsExpectedValue(Vector3D first, Vector3D second, Vector3D expected)
     {
         var actual = first + second;
 
@@ -99,7 +99,7 @@ public class Vector3DTests
 
     [Theory]
     [MemberData(nameof(SubtractionTestCases))]
-    public void Subtraction(Vector3D first, Vector3D second, Vector3D expected)
+    public void Subtraction_ReturnsExpectedValue(Vector3D first, Vector3D second, Vector3D expected)
     {
         var actual = first - second;
 
@@ -110,7 +110,7 @@ public class Vector3DTests
 
     [Theory]
     [MemberData(nameof(MultiplicationTestCases))]
-    public void Multiplication(Vector3D vector, float scalar, Vector3D expected)
+    public void Multiplication_ReturnsExpectedValue(Vector3D vector, float scalar, Vector3D expected)
     {
         var result1 = vector * scalar;
         var result2 = scalar * vector;
@@ -125,7 +125,7 @@ public class Vector3DTests
 
     [Theory]
     [MemberData(nameof(DivisionTestCases))]
-    public void Division(Vector3D vector, float scalar, Vector3D expected)
+    public void Division_ReturnsExpectedValue(Vector3D vector, float scalar, Vector3D expected)
     {
         var result = vector / scalar;
 
