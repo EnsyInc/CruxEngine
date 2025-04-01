@@ -33,7 +33,7 @@ public sealed record Vector3D
     /// Constructor that sets all components to the same value.
     /// </summary>
     /// <param name="value">The value for the components.</param>
-    /// <remarks>Will set all components to 0.</remarks>
+    /// <remarks>Will set all components to the provided value.</remarks>
     public Vector3D(float value) : this(value, value, value) { }
 
     /// <summary>
