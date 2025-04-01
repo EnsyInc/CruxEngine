@@ -71,7 +71,7 @@ public sealed record Matrix3D
     /// </summary>
     /// <param name="row">The row of the data.</param>
     /// <param name="column">The column of the data.</param>
-    /// <returns>THe data at the specified row and column.</returns>
+    /// <returns>The data at the specified row and column.</returns>
     public float this[int row, int column]
     {
         get => _matrix[row, column];
