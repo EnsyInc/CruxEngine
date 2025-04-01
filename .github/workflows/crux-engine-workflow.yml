@@ -1,0 +1,46 @@
+name: crux-engine
+run-name: EnsyInc CruxEngine
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET Core 9.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 9.0.x
+
+      - name: Setup Java 17.0 (Needed for Sonar)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'microsoft'
+          java-version: '17.0'
+
+      - name: Restore solution
+        run: dotnet restore
+        working-directory: ./src/CruxEngine
+
+      - name: Build solution
+        run: dotnet build --configuration Release --no-restore
+        working-directory: ./src/CruxEngine
+
+      - name: Install DotNet SonarScanner
+        run: dotnet tool install --global dotnet-sonarscanner
+
+      - name: Test solution - UnitTests
+        working-directory: ./
+        shell: pwsh
+        run: ./infra/scripts/run-unit-tests.ps1
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
