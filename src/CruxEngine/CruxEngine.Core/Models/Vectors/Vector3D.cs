@@ -30,6 +30,13 @@ public sealed record Vector3D
     public Vector3D() { }
 
     /// <summary>
+    /// Constructor that sets all components to the same value.
+    /// </summary>
+    /// <param name="value">The value for the components.</param>
+    /// <remarks>Will set all components to the provided value.</remarks>
+    public Vector3D(float value) : this(value, value, value) { }
+
+    /// <summary>
     /// Constructor that sets all components to the values provided.
     /// </summary>
     /// <param name="x">The value for the <see cref="X"/> component.</param>
@@ -68,27 +75,27 @@ public sealed record Vector3D
     /// Negates the vector.
     /// </summary>
     /// <param name="original">The vector to negate</param>
-    /// <returns>A new instance of a <see cref="Vector3D"/> with all of the components negated.</returns>
+    /// <returns>A new instance of a <see cref="Vector3D"/> with all the components negated.</returns>
     public static Vector3D operator -(Vector3D original)
         => new(-original.X, -original.Y, -original.Z);
 
     /// <summary>
     /// Adds two vectors together.
     /// </summary>
-    /// <param name="first">First vector of the operation.</param>
-    /// <param name="second">Second vector of the operation.</param>
+    /// <param name="left">First vector of the operation.</param>
+    /// <param name="right">Second vector of the operation.</param>
     /// <returns>A new instance of a <see cref="Vector3D"/> that represents the sum of the input vectors.</returns>
-    public static Vector3D operator +(Vector3D first, Vector3D second)
-        => new(first.X + second.X, first.Y + second.Y, first.Z + second.Z);
+    public static Vector3D operator +(Vector3D left, Vector3D right)
+        => new(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
 
     /// <summary>
     /// Subtracts a vector from another one.
     /// </summary>
-    /// <param name="first">The vector from which to subtract.</param>
-    /// <param name="second">The vector to subtract.</param>
+    /// <param name="left">The vector from which to subtract.</param>
+    /// <param name="right">The vector to subtract.</param>
     /// <returns>A new instance of a <see cref="Vector3D"/> that represents the result of the subtraction of the input vectors.</returns>
-    public static Vector3D operator -(Vector3D first, Vector3D second)
-        => new(first.X - second.X, first.Y - second.Y, first.Z - second.Z);
+    public static Vector3D operator -(Vector3D left, Vector3D right)
+        => new(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
 
     /// <summary>
     /// Multiplies a vector by a scalar.
