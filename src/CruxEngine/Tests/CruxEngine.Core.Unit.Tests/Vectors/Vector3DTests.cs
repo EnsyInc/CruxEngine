@@ -1,11 +1,10 @@
-﻿using CruxEngine.Core.Models.Vectors;
+﻿using CruxEngine.Core.Helpers;
+using CruxEngine.Core.Models.Vectors;
 
 namespace CruxEngine.Core.Unit.Tests.Vectors;
 
 public class Vector3DTests
 {
-    private const float Tolerance = 1e-6f;
-
     [Fact]
     public void DefaultConstructor_FillsVector3DWith0()
     {
@@ -14,6 +13,37 @@ public class Vector3DTests
         Assert.Equal(0, vector.X);
         Assert.Equal(0, vector.Y);
         Assert.Equal(0, vector.Z);
+    }
+
+    [Fact]
+    public void DefaultConstructor_WithCustomValues_FillsVector3DWithCustomValues()
+    {
+        var vector = new Vector3D()
+        {
+            X = 1,
+            Y = 2,
+            Z = 3
+        };
+
+        Assert.Equal(1, vector.X);
+        Assert.Equal(2, vector.Y);
+        Assert.Equal(3, vector.Z);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(1)]
+    [InlineData(-1.1f)]
+    [InlineData(float.MinValue)]
+    [InlineData(float.MaxValue)]
+    [InlineData(float.Epsilon)]
+    public void SingleFloatConstructor_FillsVector3DWithTheValue(float value)
+    {
+        var vector = new Vector3D(value);
+
+        Assert.Equal(value, vector.X);
+        Assert.Equal(value, vector.Y);
+        Assert.Equal(value, vector.Z);
     }
 
     [Theory]
@@ -27,9 +57,9 @@ public class Vector3DTests
     {
         var vector = new Vector3D(x, y, z);
 
-        Assert.Equal(x, vector.X, Tolerance);
-        Assert.Equal(y, vector.Y, Tolerance);
-        Assert.Equal(z, vector.Z, Tolerance);
+        Assert.Equal(x, vector.X, FloatHelpers.Precision);
+        Assert.Equal(y, vector.Y, FloatHelpers.Precision);
+        Assert.Equal(z, vector.Z, FloatHelpers.Precision);
     }
 
     [Fact]
@@ -47,9 +77,9 @@ public class Vector3DTests
     {
         var actual = vector.Normalize();
 
-        Assert.Equal(expected.X, actual.X, Tolerance);
-        Assert.Equal(expected.Y, actual.Y, Tolerance);
-        Assert.Equal(expected.Z, actual.Z, Tolerance);
+        Assert.Equal(expected.X, actual.X, FloatHelpers.Precision);
+        Assert.Equal(expected.Y, actual.Y, FloatHelpers.Precision);
+        Assert.Equal(expected.Z, actual.Z, FloatHelpers.Precision);
     }
 
     [Theory]
@@ -66,7 +96,7 @@ public class Vector3DTests
 
         var actualMagnitude = vector.Magnitude();
 
-        Assert.Equal(expectedMagnitude, actualMagnitude, Tolerance);
+        Assert.Equal(expectedMagnitude, actualMagnitude, FloatHelpers.Precision);
     }
 
     [Theory]
@@ -81,20 +111,24 @@ public class Vector3DTests
 
         var negated = -vector;
         
-        Assert.Equal(-x, negated.X, Tolerance);
-        Assert.Equal(-y, negated.Y, Tolerance);
-        Assert.Equal(-z, negated.Z, Tolerance);
+        Assert.Equal(-x, negated.X, FloatHelpers.Precision);
+        Assert.Equal(-y, negated.Y, FloatHelpers.Precision);
+        Assert.Equal(-z, negated.Z, FloatHelpers.Precision);
     }
 
     [Theory]
     [MemberData(nameof(AdditionTestCases))]
     public void Addition_ReturnsExpectedValue(Vector3D first, Vector3D second, Vector3D expected)
     {
-        var actual = first + second;
+        var actual1 = first + second;
+        var actual2 = second + first;
 
-        Assert.Equal(expected.X, actual.X, Tolerance);
-        Assert.Equal(expected.Y, actual.Y, Tolerance);
-        Assert.Equal(expected.Z, actual.Z, Tolerance);
+        Assert.Equal(expected.X, actual1.X, FloatHelpers.Precision);
+        Assert.Equal(expected.Y, actual1.Y, FloatHelpers.Precision);
+        Assert.Equal(expected.Z, actual1.Z, FloatHelpers.Precision);
+        Assert.Equal(expected.X, actual2.X, FloatHelpers.Precision);
+        Assert.Equal(expected.Y, actual2.Y, FloatHelpers.Precision);
+        Assert.Equal(expected.Z, actual2.Z, FloatHelpers.Precision);
     }
 
     [Theory]
@@ -103,9 +137,9 @@ public class Vector3DTests
     {
         var actual = first - second;
 
-        Assert.Equal(expected.X, actual.X, Tolerance);
-        Assert.Equal(expected.Y, actual.Y, Tolerance);
-        Assert.Equal(expected.Z, actual.Z, Tolerance);
+        Assert.Equal(expected.X, actual.X, FloatHelpers.Precision);
+        Assert.Equal(expected.Y, actual.Y, FloatHelpers.Precision);
+        Assert.Equal(expected.Z, actual.Z, FloatHelpers.Precision);
     }
 
     [Theory]
@@ -115,12 +149,12 @@ public class Vector3DTests
         var result1 = vector * scalar;
         var result2 = scalar * vector;
 
-        Assert.Equal(expected.X, result1.X, Tolerance);
-        Assert.Equal(expected.Y, result1.Y, Tolerance);
-        Assert.Equal(expected.Z, result1.Z, Tolerance);
-        Assert.Equal(expected.X, result2.X, Tolerance);
-        Assert.Equal(expected.Y, result2.Y, Tolerance);
-        Assert.Equal(expected.Z, result2.Z, Tolerance);
+        Assert.Equal(expected.X, result1.X, FloatHelpers.Precision);
+        Assert.Equal(expected.Y, result1.Y, FloatHelpers.Precision);
+        Assert.Equal(expected.Z, result1.Z, FloatHelpers.Precision);
+        Assert.Equal(expected.X, result2.X, FloatHelpers.Precision);
+        Assert.Equal(expected.Y, result2.Y, FloatHelpers.Precision);
+        Assert.Equal(expected.Z, result2.Z, FloatHelpers.Precision);
     }
 
     [Theory]
@@ -129,16 +163,16 @@ public class Vector3DTests
     {
         var result = vector / scalar;
 
-        Assert.Equal(expected.X, result.X, Tolerance);
-        Assert.Equal(expected.Y, result.Y, Tolerance);
-        Assert.Equal(expected.Z, result.Z, Tolerance);
+        Assert.Equal(expected.X, result.X, FloatHelpers.Precision);
+        Assert.Equal(expected.Y, result.Y, FloatHelpers.Precision);
+        Assert.Equal(expected.Z, result.Z, FloatHelpers.Precision);
     }
 
     public static IEnumerable<TheoryDataRow<Vector3D, Vector3D, Vector3D>> AdditionTestCases
         => [
             (new Vector3D(1, 2, 3), new Vector3D(4, 5, 6), new Vector3D(5, 7, 9)),
             (new Vector3D(-1, -2, -3), new Vector3D(-4, -5, -6), new Vector3D(-5, -7, -9)),
-            (new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), new Vector3D(0, 0, 0)),
+            (new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), new Vector3D()),
             (new Vector3D(1.1f, 2.2f, 3.3f), new Vector3D(-4.4f, -5.5f, -6.6f), new Vector3D(-3.3f, -3.3f, -3.3f)),
             (new Vector3D(float.MaxValue, float.MaxValue, float.MaxValue), new Vector3D(float.MinValue, float.MinValue, float.MinValue), new Vector3D(float.MaxValue + float.MinValue, float.MaxValue + float.MinValue, float.MaxValue + float.MinValue)),
         ];
@@ -149,7 +183,7 @@ public class Vector3DTests
             (new Vector3D(4, 5, 6), new Vector3D(1, 2, 3), new Vector3D(3, 3, 3)),
             (new Vector3D(-1, -2, -3), new Vector3D(-4, -5, -6), new Vector3D(3, 3, 3)),
             (new Vector3D(-4, -5, -6), new Vector3D(-1, -2, -3), new Vector3D(-3, -3, -3)),
-            (new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), new Vector3D(0, 0, 0)),
+            (new Vector3D(0, 0, 0), new Vector3D(0, 0, 0), new Vector3D()),
             (new Vector3D(1.1f, 2.2f, 3.3f), new Vector3D(-4.4f, -5.5f, -6.6f), new Vector3D(5.5f, 7.7f, 9.9f)),
             (new Vector3D(-4.4f, -5.5f, -6.6f), new Vector3D(1.1f, 2.2f, 3.3f), new Vector3D(-5.5f, -7.7f, -9.9f)),
             (new Vector3D(float.MaxValue, float.MaxValue, float.MaxValue), new Vector3D(float.MinValue, float.MinValue, float.MinValue), new Vector3D(float.MaxValue - float.MinValue, float.MaxValue - float.MinValue, float.MaxValue - float.MinValue)),
